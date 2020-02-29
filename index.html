@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Air Hockey</title>
+    <link rel="stylesheet" href="css/main.css">
+    <script defer src="js/main.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Old School Cool Air Hockey</h1>
+    </header>
+    <div class="msg">
+        <p>Press Start to Play</p>
+    </div>
+    <!--div class for the game-board, use flex box for children-->
+    <div class="game-board">
+        <!--div class for home-board, use flex box to align <p> and score img-->
+        <div class="home-board">
+            <p>HOME</p>
+        </div>
+        <div class="canvas"></div>
+        <!-- div class for away-board, use flex box to align <p> and score img-->
+        <div class="away-board">
+            <p>AWAY</p>
+        </div>
+    </div>
+    <button class="start-btn">START</button>
+    <button class="reset-btn">RESET</button>
+    <div class="how-to-play">
+        <button class="how-to-play-btn">HOW TO PLAY</button>
+    </div>
+</body>
+</html>
