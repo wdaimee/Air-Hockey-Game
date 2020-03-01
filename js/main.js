@@ -2,6 +2,7 @@
 //canvas related constants
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
+const msg = document.querySelector('.msg-p');
 
 //start button
 const start_btn = document.querySelector('.start-btn');
@@ -13,6 +14,7 @@ let rPuck = 20;
     //amount to increment puck when frame refreshed
 let dxPuck = 2;
 let dyPuck = 2;
+
 
 //canvas related constants
 const canvasW = ctx.canvas.width;
@@ -91,6 +93,7 @@ let yPuck = canvasH/2;
 start_btn.addEventListener('click', startGame);
 document.addEventListener('keydown', keyDown);
 document.addEventListener('keyup', keyUp);
+
 
 /*------ functions ------*/
 
@@ -206,14 +209,14 @@ function controls() {
 }
 
 function scoreGoal(team) {
-    team.score += 1;
-
+    msg.textContent = `${team} SCORES!!!`
+    
 }
 
 
 //function for starting the game
 function startGame() {
-    let requestID = false;
+    msg.textContent = "";
     drawRink();
     drawPuck();
     drawPaddles();
@@ -227,16 +230,17 @@ function startGame() {
         
     }
     if(xPuck > canvasW && (yPuck - rPuck > canvasH/4 || yPuck + rPuck < canvasH*(3/4))) {
-        document.location.reload();
+        scoreGoal(players.home);
     }
     else if(xPuck < 0 && (yPuck - rPuck > canvasH/4 || yPuck + rPuck < canvasH*(3/4))) {
-        document.location.reload();
+        scoreGoal(players.away);
     }
 
     xPuck += dxPuck;
     yPuck += dyPuck;
 
     requestAnimationFrame(startGame);
+
 
 
 

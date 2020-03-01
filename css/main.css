@@ -9,16 +9,20 @@ canvas {
 .game-board {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-evenly;
 
 }
 
 .home-board {
     display: flex;
     flex-direction: column;
+    
+   
 }
 
 .away-board {
     display: flex;
     flex-direction: column;
+   
+    
 }
