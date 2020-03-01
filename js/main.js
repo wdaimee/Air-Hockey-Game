@@ -7,6 +7,13 @@ const ctx = canvas.getContext('2d');
 const start_btn = document.querySelector('.start-btn');
 
 /*------ constanats ------*/
+//puck realted constants
+    //radius of puck
+let rPuck = 20;
+    //amount to increment puck when frame refreshed
+let dxPuck = 2;
+let dyPuck = 2;
+
 //canvas related constants
 const canvasW = ctx.canvas.width;
 const canvasH = ctx.canvas.height;
@@ -46,8 +53,8 @@ const rinkCoord = {
 
 //object for player information, intial position of paddles
 const players = {
-    home: {x1: canvasW/8, y1: canvasH/2, r: paddleRadius, color: 'red'},
-    away: {x1: canvasW*(7/8), y1: canvasH/2, r: paddleRadius, color: 'blue'},
+    home: {x1: canvasW/8, y1: canvasH/2, r: paddleRadius, color: 'red', score: 0},
+    away: {x1: canvasW*(7/8), y1: canvasH/2, r: paddleRadius, color: 'blue', score: 0},
     drawPaddle: function(team) {
         ctx.beginPath();
         ctx.fillStyle = team.color;
@@ -63,18 +70,21 @@ const players = {
 
 /*------ app's state variables ------*/
 //state variables related to controls
-//away team control state variables
+    //away team control state variables
 let upPressed = false;
 let downPressed = false;
 let rightPressed = false;
 let leftPressed = false;
 
-//home team control state variables
+    //home team control state variables
 let wPressed = false;
 let sPressed = false;
 let aPressed = false;
 let dPressed = false;
 
+//puck initial coordinates
+let xPuck = canvasW/2;
+let yPuck = canvasH/2;
 
 /*------ event listeners ------*/
 
@@ -116,7 +126,7 @@ function drawRink() {
 //function to draw the main puck element of the game
 function drawPuck() {
     ctx.beginPath();
-    ctx.arc(canvasW/2, canvasH/2, r = 20, 0, Math.PI*2);
+    ctx.arc(xPuck, yPuck, rPuck, 0, Math.PI*2);
     ctx.fillStyle = 'black';
     ctx.fill();
 }
@@ -132,6 +142,62 @@ drawRink();
 drawPuck();
 drawPaddles();
 
+function keyDown(evt) {
+    if(evt.key == "Right" || evt.key == "ArrowRight") {
+        rightPressed = true;
+    }
+    else if(evt.key == "Left" || evt.key == "ArrowLeft") {
+        leftPressed = true;
+    }
+    else if(evt.key == "Up" || evt.key == "ArrowUp") {
+        upPressed = true;
+    }
+    else if(evt.key == "Down" || evt.key == "ArrowDown") {
+        downPressed = true;
+    }
+    else if(evt.key == "w") {
+        wPressed = true;
+    }
+    else if(evt.key == "s") {
+        sPressed = true;
+    }
+    else if(evt.key == "a") {
+        aPressed = true;
+    }
+    else if(evt.key == "d") {
+        aPressed = true;
+    }
+
+}
+
+function keyUp(evt) {
+    if(evt.key == "Right" || evt.key == "ArrowRight") {
+        rightPressed = false;
+    }
+    else if(evt.key == "Left" || evt.key == "ArrowLeft") {
+        leftPressed = false;
+    }
+    else if(evt.key == "Up" || evt.key == "ArrowUp") {
+        upPressed = false;
+    }
+    else if(evt.key == "Down" || evt.key == "ArrowDown") {
+        downPressed = false;
+    }
+    else if(evt.key == "w") {
+        wPressed = false;
+    }
+    else if(evt.key == "s") {
+        sPressed = false;
+    }
+    else if(evt.key == "a") {
+        aPressed = false;
+    }
+    else if(evt.key == "d") {
+        aPressed = false;
+    }
+
+}
+
 
 
 //function for controls to move the paddles
@@ -139,17 +205,40 @@ function controls() {
     
 }
 
-function keyDown(evt) {
-
-}
-
-function keyUp(evt) {
+function scoreGoal(team) {
+    team.score += 1;
 
 }
 
 
 //function for starting the game
 function startGame() {
+    drawRink();
+    drawPuck();
+    drawPaddles();
+
+    if(yPuck + rPuck > canvasH || yPuck < rPuck) {
+        dyPuck = -dyPuck;
+    }
+    if((xPuck + rPuck > canvasW && (yPuck < canvasH/4 || yPuck > canvasH*(3/4))) || (xPuck < rPuck && (yPuck < canvasH/4 || yPuck > canvasH*(3/4)))) {
+        dxPuck = -dxPuck;
+    }
+    if(xPuck + rPuck > canvasW && (yPuck > canvasH/4 || yPuck < canvasH*(3/4))) {
+        scoreGoal(players.home);
+    }
+    else if(xPuck < rPuck && (yPuck > canvasH/4 || yPuck < canvasH*(3/4))) {
+        scoreGoal(players.away);
+    }
+
+    console.log(players.home.score);
+    console.log(players.away.score);
+
+
+    xPuck += dxPuck;
+    yPuck += dyPuck;
+
+
+    requestAnimationFrame(startGame);
 
 
 }
