@@ -1,4 +1,22 @@
+body {
+    text-align: center;
+}
 
 canvas {
     border: 5px solid black;
+}
+
+.game-board {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+}
+
+.home-board {
+
+}
+
+.away-board {
+    
 }

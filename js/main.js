@@ -6,11 +6,11 @@ const canvasW = ctx.canvas.width;
 const canvasH = ctx.canvas.height;
 const goalW = 20;
 const goalH = canvasH/2;
+const paddleRadius = 30;
 
 
 /*------ constanats ------*/
 //canvas related constants
-radians_360 = (Math.Pi)*2;
 const rinkCoord = {
     cL: {x1: canvasW/2, y1: 0, x2: canvasW/2, y2: canvasH, color: 'red', lineWidth: 5},
     homeBl: {x1: canvasW/3, y1: 0, x2: canvasW/3, y2: canvasH, color: 'blue', lineWidth: 5},
@@ -38,6 +38,22 @@ const rinkCoord = {
         ctx.arc(cir.x1, cir.y1, cir.r, cir.start, cir.end);
         ctx.stroke();
         ctx.closePath();
+    }
+};
+
+const players = {
+    home: {x1: canvasW/8, y1: canvasH/2, r: paddleRadius, color: 'red'},
+    away: {x1: canvasW*(7/8), y1: canvasH/2, r: paddleRadius, color: 'blue'},
+    drawPaddle: function(team) {
+        ctx.beginPath();
+        ctx.fillStyle = team.color;
+        ctx.arc(team.x1, team.y1, team.r, 0, Math.PI*2);
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.strokeStyle = 'white';
+        ctx.arc(team.x1, team.y1, team.r/2, 0, Math.PI*2);
+        ctx.stroke();
     }
 };
 
@@ -74,7 +90,26 @@ function drawRink() {
     //draw center circle
     rinkCoord.drawCircle(rinkCoord.centerCir);
 
+}
+
+//function to draw the main puck element of the game
+function drawPuck() {
+    ctx.beginPath();
+    ctx.arc(canvasW/2, canvasH/2, r = 20, 0, Math.PI*2);
+    ctx.fillStyle = 'black';
+    ctx.fill();
+}
+
+//function to draw the user paddles
+function drawPaddles() {
+    players.drawPaddle(players.home);
+    players.drawPaddle(players.away);
 
 }
 
 drawRink();
+drawPuck();
+drawPaddles();
+
+
+
