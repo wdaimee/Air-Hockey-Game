@@ -213,32 +213,31 @@ function scoreGoal(team) {
 
 //function for starting the game
 function startGame() {
+    let requestID = false;
     drawRink();
     drawPuck();
     drawPaddles();
 
     if(yPuck + rPuck > canvasH || yPuck < rPuck) {
         dyPuck = -dyPuck;
+        
     }
-    if((xPuck + rPuck > canvasW && (yPuck < canvasH/4 || yPuck > canvasH*(3/4))) || (xPuck < rPuck && (yPuck < canvasH/4 || yPuck > canvasH*(3/4)))) {
+    if((xPuck + rPuck > canvasW && (yPuck - rPuck < canvasH/4 || yPuck + rPuck > canvasH*(3/4))) || (xPuck < rPuck && (yPuck - rPuck < canvasH/4 || yPuck + rPuck > canvasH*(3/4)))) {
         dxPuck = -dxPuck;
+        
     }
-    if(xPuck + rPuck > canvasW && (yPuck > canvasH/4 || yPuck < canvasH*(3/4))) {
-        scoreGoal(players.home);
+    if(xPuck > canvasW && (yPuck - rPuck > canvasH/4 || yPuck + rPuck < canvasH*(3/4))) {
+        document.location.reload();
     }
-    else if(xPuck < rPuck && (yPuck > canvasH/4 || yPuck < canvasH*(3/4))) {
-        scoreGoal(players.away);
+    else if(xPuck < 0 && (yPuck - rPuck > canvasH/4 || yPuck + rPuck < canvasH*(3/4))) {
+        document.location.reload();
     }
-
-    console.log(players.home.score);
-    console.log(players.away.score);
-
 
     xPuck += dxPuck;
     yPuck += dyPuck;
 
-
     requestAnimationFrame(startGame);
+
 
 
 }
