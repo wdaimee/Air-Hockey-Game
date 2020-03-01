@@ -2,15 +2,18 @@
 //canvas related constants
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
+
+//start button
+const start_btn = document.querySelector('.start-btn');
+
+/*------ constanats ------*/
+//canvas related constants
 const canvasW = ctx.canvas.width;
 const canvasH = ctx.canvas.height;
 const goalW = 20;
 const goalH = canvasH/2;
 const paddleRadius = 30;
-
-
-/*------ constanats ------*/
-//canvas related constants
+//object that holds coordinates for drawing rink background as well as methods to draw the background to canvas
 const rinkCoord = {
     cL: {x1: canvasW/2, y1: 0, x2: canvasW/2, y2: canvasH, color: 'red', lineWidth: 5},
     homeBl: {x1: canvasW/3, y1: 0, x2: canvasW/3, y2: canvasH, color: 'blue', lineWidth: 5},
@@ -41,6 +44,7 @@ const rinkCoord = {
     }
 };
 
+//object for player information, intial position of paddles
 const players = {
     home: {x1: canvasW/8, y1: canvasH/2, r: paddleRadius, color: 'red'},
     away: {x1: canvasW*(7/8), y1: canvasH/2, r: paddleRadius, color: 'blue'},
@@ -58,8 +62,25 @@ const players = {
 };
 
 /*------ app's state variables ------*/
+//state variables related to controls
+//away team control state variables
+let upPressed = false;
+let downPressed = false;
+let rightPressed = false;
+let leftPressed = false;
+
+//home team control state variables
+let wPressed = false;
+let sPressed = false;
+let aPressed = false;
+let dPressed = false;
+
 
 /*------ event listeners ------*/
+
+start_btn.addEventListener('click', startGame);
+document.addEventListener('keydown', keyDown);
+document.addEventListener('keyup', keyUp);
 
 /*------ functions ------*/
 
@@ -112,4 +133,24 @@ drawPuck();
 drawPaddles();
 
 
+
+//function for controls to move the paddles
+function controls() {
+    
+}
+
+function keyDown(evt) {
+
+}
+
+function keyUp(evt) {
+
+}
+
+
+//function for starting the game
+function startGame() {
+
+
+}
 
