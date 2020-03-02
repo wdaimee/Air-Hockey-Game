@@ -1,11 +1,11 @@
 When Page Loads:
-- Initialize all state variables through init function
-- Print/display canvas with background, paddles, puck, and puck count
-	- paddle colour: Blue for Home Team, Red for Away Team
-	- save canvas state
+- Initialize all state variables through init function x
+- Print/display canvas with background, paddles, puck, and puck count x
+	- paddle colour: Blue for Home Team, Red for Away Team x
+	- save canvas state 
 	- possible render state or save state
-- Print start button
-- Print message "Press Start to Play"
+- Print start button x
+- Print message "Press Start to Play" x
 - Print button for How To Play
 	- Toggle hide/show
 		- Default hide
@@ -14,10 +14,10 @@ When Page Loads:
 
 
 When player pressed play:
-- puck will begin moving
-- collision detection with puck against walls
-	- bounce back in opposite direction
-- Use arrow keys to control Home Team, used "W A S D" to control Away team
+- puck will begin moving x
+- collision detection with puck against walls x
+	- bounce back in opposite direction x
+- Use arrow keys to control Home Team, used "W A S D" to control Away team x
 - collision detection of paddle
 	- do not allow paddle to move beyond walls and half way line
 - collision detection between paddle and puck
@@ -25,7 +25,7 @@ When player pressed play:
 When player scores as a goal:
 - puck will move into goal section (no collision detection in area)
 - player score to increment by 1 in object/array
-- message to display goal scored by player
+- message to display goal scored by player x
 - render and start game again but with 1 less puck
 - if player scores 4 goals
 	- display "PLAYER IS THE WINNER"
