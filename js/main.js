@@ -384,6 +384,11 @@ function startGame() {
         yPuck = canvasH/2;
         goalScored = false;
         $msgp2.text("Press Start for the Next Puck");
+        //If one puck left, make the puck faster
+        if(numPucks === 1){
+            dxPuck = 10;
+            dyPuck = 10;
+        }
         render();
     }
 
