@@ -3,6 +3,8 @@
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 const $msg = $('.msg-p');
+const $homeScoreImg = $('.home-score-img');
+const $awayScoreImg = $('.away-score-img');
 
 //start button
 const start_btn = document.querySelector('.start-btn');
@@ -37,8 +39,8 @@ let dPressed = false;
 let xPuck = canvasW/2;
 let yPuck = canvasH/2;
 //amount to increment puck when frame is refreshed
-let dxPuck = 2;
-let dyPuck = 2;
+let dxPuck = 4;
+let dyPuck = 4;
     
 //home team paddle initial coordinates
 let xHome = canvasW/8;
@@ -48,8 +50,14 @@ let xAway = canvasW*(7/8);
 let yAway = canvasH/2;
 
 //amount to increment paddle when frame is refreshed
-let dxPaddle = 2;
-let dyPaddle = 2;
+let dxPaddle = 4;
+let dyPaddle = 4;
+
+//if goal scored turn to true
+let goalScored = false;
+
+//stopping the animantion frame after a goal
+let stopAnimate;
 
 /*------ Objects ------*/
 //object that holds coordinates for drawing rink background as well as methods to draw the background to canvas
@@ -153,9 +161,51 @@ function drawPaddles() {
 
 }
 
-drawRink();
-drawPuck();
-drawPaddles();
+function renderHomeScore() {
+    if(players.home.score == 0) {
+        $homeScoreImg.attr("src", "images/Home/0.png");
+    }
+    else if(players.home.score == 1) {
+        $homeScoreImg.attr("src", "images/Home/1.png");
+    }
+    else if(players.home.score == 2) {
+        $homeScoreImg.attr("src", "images/Home/2.png");
+    }
+    else if(players.home.score == 3) {
+        $homeScoreImg.attr("src", "images/Home/3.png");
+    }
+    else if(players.home.score == 4) {
+        $homeScoreImg.attr("src", "images/Home/4.png");
+    }
+}
+
+function renderAwayScore() {
+    if(players.away.score == 0) {
+        $awayScoreImg.attr("src", "images/Away/0.png");
+    }
+    else if(players.away.score == 1) {
+        $awayScoreImg.attr("src", "images/Away/1.png");
+    }
+    else if(players.away.score == 2) {
+        $awayScoreImg.attr("src", "images/Away/2.png");
+    }
+    else if(players.away.score == 3) {
+        $awayScoreImg.attr("src", "images/Away/3.png");
+    }
+    else if(players.away.score == 4) {
+        $awayScoreImg.attr("src", "images/Away/4.png");
+    }
+}
+
+function render() {
+    drawRink();
+    drawPuck();
+    drawPaddles();
+    renderHomeScore();
+    renderAwayScore();
+}
+
+render();
 
 function keyDown(evt) {
     if(evt.key == "Right" || evt.key == "ArrowRight") {
@@ -182,7 +232,6 @@ function keyDown(evt) {
     if(evt.key == "d") {
         dPressed = true;
     }
-
 }
 
 function keyUp(evt) {
@@ -210,7 +259,6 @@ function keyUp(evt) {
     if(evt.key == "d") {
         dPressed = false;
     }
-
 }
 
 //function for controls to move the paddles
@@ -265,34 +313,43 @@ function controls() {
       if(players.home.y1 > (canvasH - paddleRadius)) {
           players.home.y1 = canvasH - paddleRadius;
       }
-    }
-
-
-  
+    }  
 }
 
 function scoreGoal(team) {
+    goalScored = true;
     $msg.text(`${team.name} SCORES!!!`);
+    team.score += 1;
+    renderHomeScore();
+    renderAwayScore();
     
 }
 
+//function to detect collision between puck and paddles
+function collisionDetection() {
+    if(Math.sqrt(Math.pow((xPuck - players.home.x1),2) + Math.pow((yPuck - players.home.y1),2)) < paddleRadius + rPuck) {
+        dxPuck = -dxPuck;
+        dyPuck = -dyPuck;
+    }
+    if(Math.sqrt(Math.pow((xPuck - players.away.x1),2) + Math.pow((yPuck - players.away.y1),2)) < paddleRadius + rPuck) {
+        dxPuck = -dxPuck;
+        dyPuck = -dyPuck;
+    }   
+}
 
 //function for starting the game
 function startGame() {
     
     $msg.text('');
-    drawRink();
-    drawPuck();
-    drawPaddles();
+    render();
     controls();
-
-    if(yPuck + rPuck > canvasH || yPuck < rPuck) {
+    collisionDetection();
+    
+    if(yPuck + dyPuck > canvasH - rPuck || yPuck + dyPuck < rPuck) {
         dyPuck = -dyPuck;
-        
     }
     if((xPuck + rPuck > canvasW && (yPuck - rPuck < canvasH/4 || yPuck + rPuck > canvasH*(3/4))) || (xPuck < rPuck && (yPuck - rPuck < canvasH/4 || yPuck + rPuck > canvasH*(3/4)))) {
         dxPuck = -dxPuck;
-        
     }
     if(xPuck > canvasW && (yPuck - rPuck > canvasH/4 || yPuck + rPuck < canvasH*(3/4))) {
         scoreGoal(players.home);
@@ -301,16 +358,18 @@ function startGame() {
         scoreGoal(players.away);
     }
 
-
     xPuck += dxPuck;
     yPuck += dyPuck;
 
-    
-
-    requestAnimationFrame(startGame);
-
-
-
+    if(!goalScored) {
+        stopAnimate = requestAnimationFrame(startGame);
+    }
+    else {
+        cancelAnimationFrame(stopAnimate);
+        xPuck = canvasW/2; 
+        yPuck = canvasH/2;
+        drawPuck();
+    }
 
 }
 
