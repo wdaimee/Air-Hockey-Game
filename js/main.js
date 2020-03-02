@@ -2,9 +2,11 @@
 //canvas related constants
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
-const $msg = $('.msg-p');
+const $msgp = $('.msg-p');
+const $msgp2 = $('.msg-p2');
 const $homeScoreImg = $('.home-score-img');
 const $awayScoreImg = $('.away-score-img');
+const $numPucks = $('.num-pucks > p');
 
 //start button
 const start_btn = document.querySelector('.start-btn');
@@ -39,8 +41,8 @@ let dPressed = false;
 let xPuck = canvasW/2;
 let yPuck = canvasH/2;
 //amount to increment puck when frame is refreshed
-let dxPuck = 4;
-let dyPuck = 4;
+let dxPuck = 6;
+let dyPuck = 6;
     
 //home team paddle initial coordinates
 let xHome = canvasW/8;
@@ -58,6 +60,9 @@ let goalScored = false;
 
 //stopping the animantion frame after a goal
 let stopAnimate;
+
+//number of pucks left to play
+let numPucks = 7;
 
 /*------ Objects ------*/
 //object that holds coordinates for drawing rink background as well as methods to draw the background to canvas
@@ -161,6 +166,7 @@ function drawPaddles() {
 
 }
 
+//function to render the home score
 function renderHomeScore() {
     if(players.home.score == 0) {
         $homeScoreImg.attr("src", "images/Home/0.png");
@@ -179,6 +185,7 @@ function renderHomeScore() {
     }
 }
 
+//function to render the away score
 function renderAwayScore() {
     if(players.away.score == 0) {
         $awayScoreImg.attr("src", "images/Away/0.png");
@@ -197,16 +204,22 @@ function renderAwayScore() {
     }
 }
 
+//function to render the number of pucks
+function renderNumPucks() {
+    $numPucks.text(`${numPucks} Pucks Left`);
+}
+
+//global render function to render all render functions
 function render() {
     drawRink();
     drawPuck();
     drawPaddles();
     renderHomeScore();
     renderAwayScore();
+    renderNumPucks();
 }
 
-render();
-
+//function for key down pressed
 function keyDown(evt) {
     if(evt.key == "Right" || evt.key == "ArrowRight") {
         rightPressed = true;
@@ -234,6 +247,7 @@ function keyDown(evt) {
     }
 }
 
+//function for key up pressed (need to stop travel of paddle when key up)
 function keyUp(evt) {
     if(evt.key == "Right" || evt.key == "ArrowRight") {
         rightPressed = false;
@@ -316,31 +330,31 @@ function controls() {
     }  
 }
 
+//function when a goal is scored, set goalScored variable to true and increment team score by 1 and deincrement num pucks
 function scoreGoal(team) {
     goalScored = true;
-    $msg.text(`${team.name} SCORES!!!`);
+    $msgp.text(`${team.name} SCORES!!!`);
     team.score += 1;
-    renderHomeScore();
-    renderAwayScore();
-    
+    numPucks -= 1;
+    return;
 }
 
 //function to detect collision between puck and paddles
 function collisionDetection() {
     if(Math.sqrt(Math.pow((xPuck - players.home.x1),2) + Math.pow((yPuck - players.home.y1),2)) < paddleRadius + rPuck) {
         dxPuck = -dxPuck;
-        dyPuck = -dyPuck;
+        dyPuck = dyPuck;
     }
     if(Math.sqrt(Math.pow((xPuck - players.away.x1),2) + Math.pow((yPuck - players.away.y1),2)) < paddleRadius + rPuck) {
         dxPuck = -dxPuck;
-        dyPuck = -dyPuck;
+        dyPuck = dyPuck;
     }   
 }
 
 //function for starting the game
 function startGame() {
-    
-    $msg.text('');
+    $msgp.text('');
+    $msgp2.text('');
     render();
     controls();
     collisionDetection();
@@ -368,8 +382,13 @@ function startGame() {
         cancelAnimationFrame(stopAnimate);
         xPuck = canvasW/2; 
         yPuck = canvasH/2;
-        drawPuck();
+        goalScored = false;
+        $msgp2.text("Press Start for the Next Puck");
+        render();
     }
 
 }
+
+//render the game elements before start
+render();
 
