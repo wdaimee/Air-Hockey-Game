@@ -10,11 +10,7 @@ const start_btn = document.querySelector('.start-btn');
 /*------ constanats ------*/
 //puck realted constants
     //radius of puck
-let rPuck = 20;
-    //amount to increment puck when frame refreshed
-let dxPuck = 2;
-let dyPuck = 2;
-
+const rPuck = 20;
 
 //canvas related constants
 const canvasW = ctx.canvas.width;
@@ -22,6 +18,40 @@ const canvasH = ctx.canvas.height;
 const goalW = 20;
 const goalH = canvasH/2;
 const paddleRadius = 30;
+
+/*------ app's state variables ------*/
+//state variables related to controls
+//away team control state variables
+let upPressed = false;
+let downPressed = false;
+let rightPressed = false;
+let leftPressed = false;
+    
+//home team control state variables
+let wPressed = false;
+let sPressed = false;
+let aPressed = false;
+let dPressed = false;
+    
+//puck initial coordinates
+let xPuck = canvasW/2;
+let yPuck = canvasH/2;
+//amount to increment puck when frame is refreshed
+let dxPuck = 2;
+let dyPuck = 2;
+    
+//home team paddle initial coordinates
+let xHome = canvasW/8;
+let yHome = canvasH/2;
+//away team paddle initial coordinates
+let xAway = canvasW*(7/8);
+let yAway = canvasH/2;
+
+//amount to increment paddle when frame is refreshed
+let dxPaddle = 2;
+let dyPaddle = 2;
+
+/*------ Objects ------*/
 //object that holds coordinates for drawing rink background as well as methods to draw the background to canvas
 const rinkCoord = {
     cL: {x1: canvasW/2, y1: 0, x2: canvasW/2, y2: canvasH, color: 'red', lineWidth: 5},
@@ -55,8 +85,8 @@ const rinkCoord = {
 
 //object for player information, intial position of paddles
 const players = {
-    home: {x1: canvasW/8, y1: canvasH/2, r: paddleRadius, color: 'red', score: 0},
-    away: {x1: canvasW*(7/8), y1: canvasH/2, r: paddleRadius, color: 'blue', score: 0},
+    home: {x1: xHome, y1: yHome, r: paddleRadius, color: 'red', score: 0},
+    away: {x1: xAway, y1: yAway, r: paddleRadius, color: 'blue', score: 0},
     drawPaddle: function(team) {
         ctx.beginPath();
         ctx.fillStyle = team.color;
@@ -70,25 +100,7 @@ const players = {
     }
 };
 
-/*------ app's state variables ------*/
-//state variables related to controls
-    //away team control state variables
-let upPressed = false;
-let downPressed = false;
-let rightPressed = false;
-let leftPressed = false;
-
-    //home team control state variables
-let wPressed = false;
-let sPressed = false;
-let aPressed = false;
-let dPressed = false;
-
-//puck initial coordinates
-let xPuck = canvasW/2;
-let yPuck = canvasH/2;
-
-/*------ event listeners ------*/
+/*------ event handlers ------*/
 
 start_btn.addEventListener('click', startGame);
 document.addEventListener('keydown', keyDown);
@@ -149,26 +161,26 @@ function keyDown(evt) {
     if(evt.key == "Right" || evt.key == "ArrowRight") {
         rightPressed = true;
     }
-    else if(evt.key == "Left" || evt.key == "ArrowLeft") {
+    if(evt.key == "Left" || evt.key == "ArrowLeft") {
         leftPressed = true;
     }
-    else if(evt.key == "Up" || evt.key == "ArrowUp") {
+    if(evt.key == "Up" || evt.key == "ArrowUp") {
         upPressed = true;
     }
-    else if(evt.key == "Down" || evt.key == "ArrowDown") {
+    if(evt.key == "Down" || evt.key == "ArrowDown") {
         downPressed = true;
     }
-    else if(evt.key == "w") {
+    if(evt.key == "w") {
         wPressed = true;
     }
-    else if(evt.key == "s") {
+    if(evt.key == "s") {
         sPressed = true;
     }
-    else if(evt.key == "a") {
+    if(evt.key == "a") {
         aPressed = true;
     }
-    else if(evt.key == "d") {
-        aPressed = true;
+    if(evt.key == "d") {
+        dPressed = true;
     }
 
 }
@@ -177,35 +189,86 @@ function keyUp(evt) {
     if(evt.key == "Right" || evt.key == "ArrowRight") {
         rightPressed = false;
     }
-    else if(evt.key == "Left" || evt.key == "ArrowLeft") {
+    if(evt.key == "Left" || evt.key == "ArrowLeft") {
         leftPressed = false;
     }
-    else if(evt.key == "Up" || evt.key == "ArrowUp") {
+    if(evt.key == "Up" || evt.key == "ArrowUp") {
         upPressed = false;
     }
-    else if(evt.key == "Down" || evt.key == "ArrowDown") {
+    if(evt.key == "Down" || evt.key == "ArrowDown") {
         downPressed = false;
     }
-    else if(evt.key == "w") {
+    if(evt.key == "w") {
         wPressed = false;
     }
-    else if(evt.key == "s") {
+    if(evt.key == "s") {
         sPressed = false;
     }
-    else if(evt.key == "a") {
+    if(evt.key == "a") {
         aPressed = false;
     }
-    else if(evt.key == "d") {
-        aPressed = false;
+    if(evt.key == "d") {
+        dPressed = false;
     }
 
 }
 
-
-
 //function for controls to move the paddles
 function controls() {
-    
+  //controls for away team
+    if(rightPressed) {
+      players.away.x1 += dxPaddle;
+      if(players.away.x1 > (canvasW - paddleRadius)) {
+          players.away.x1 = canvasW - paddleRadius;
+      }
+    }
+    else if(leftPressed) {
+      players.away.x1 -= dxPaddle;
+      if(players.away.x1 < ((canvasW/2) + paddleRadius)) {
+          players.away.x1 = (canvasW/2) + paddleRadius;
+      }
+    }
+    if(upPressed) {
+      players.away.y1 -= dyPaddle;
+      if(players.away.y1 < paddleRadius) {
+          players.away.y1 = paddleRadius;
+      }
+    }
+    else if(downPressed) {
+      players.away.y1 += dyPaddle;
+      if(players.away.y1 > (canvasH - paddleRadius)) {
+          players.away.y1 = canvasH - paddleRadius;
+      }
+    }
+  
+  //controls for home team
+    if(dPressed) {
+      players.home.x1 += dxPaddle;
+      if(players.home.x1 > (canvasW/2 - paddleRadius)) {
+          players.home.x1 = canvasW/2 - paddleRadius;
+      } 
+    }
+    else if(aPressed) {
+      players.home.x1 -= dxPaddle;
+      if(players.home.x1 < paddleRadius) {
+          players.home.x1 = paddleRadius;
+      }
+    }
+    if(wPressed) {
+      players.home.y1 -= dyPaddle;
+      if(players.home.y1 < paddleRadius) {
+          players.home.y1 = paddleRadius;
+      }
+    }
+    else if(sPressed) {
+      players.home.y1 += dyPaddle;
+      if(players.home.y1 > (canvasH - paddleRadius)) {
+          players.home.y1 = canvasH - paddleRadius;
+      }
+    }
+
+
+  
 }
 
 function scoreGoal(team) {
@@ -216,10 +279,12 @@ function scoreGoal(team) {
 
 //function for starting the game
 function startGame() {
+    
     msg.textContent = "";
     drawRink();
     drawPuck();
     drawPaddles();
+    controls();
 
     if(yPuck + rPuck > canvasH || yPuck < rPuck) {
         dyPuck = -dyPuck;
@@ -236,8 +301,11 @@ function startGame() {
         scoreGoal(players.away);
     }
 
+
     xPuck += dxPuck;
     yPuck += dyPuck;
+
+    
 
     requestAnimationFrame(startGame);
 
