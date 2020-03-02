@@ -2,7 +2,7 @@
 //canvas related constants
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
-const msg = document.querySelector('.msg-p');
+const $msg = $('.msg-p');
 
 //start button
 const start_btn = document.querySelector('.start-btn');
@@ -85,8 +85,8 @@ const rinkCoord = {
 
 //object for player information, intial position of paddles
 const players = {
-    home: {x1: xHome, y1: yHome, r: paddleRadius, color: 'red', score: 0},
-    away: {x1: xAway, y1: yAway, r: paddleRadius, color: 'blue', score: 0},
+    home: {name: "Home Team", x1: xHome, y1: yHome, r: paddleRadius, color: 'red', score: 0},
+    away: {name: "Away Team", x1: xAway, y1: yAway, r: paddleRadius, color: 'blue', score: 0},
     drawPaddle: function(team) {
         ctx.beginPath();
         ctx.fillStyle = team.color;
@@ -272,7 +272,7 @@ function controls() {
 }
 
 function scoreGoal(team) {
-    msg.textContent = `${team} SCORES!!!`
+    $msg.text(`${team.name} SCORES!!!`);
     
 }
 
@@ -280,7 +280,7 @@ function scoreGoal(team) {
 //function for starting the game
 function startGame() {
     
-    msg.textContent = "";
+    $msg.text('');
     drawRink();
     drawPuck();
     drawPaddles();
