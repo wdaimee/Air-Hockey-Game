@@ -14,6 +14,9 @@ const $start_btn = $('.start-btn');
 //reset button
 const $reset_btn = $('.reset-btn');
 
+//how to play button
+const $howTo_btn = $('.how-to-play-btn');
+
 /*------ constanats ------*/
 //puck realted constants
 //radius of puck
@@ -120,6 +123,9 @@ const players = {
 
 $start_btn.click(startGame);
 $reset_btn.click(reloadGame);
+$howTo_btn.click(function() {
+    $('.pHowTo').toggle();
+});
 document.addEventListener('keydown', keyDown);
 document.addEventListener('keyup', keyUp);
 
@@ -235,15 +241,19 @@ function reloadGame() {
 function keyDown(evt) {
     if(evt.key == "Right" || evt.key == "ArrowRight") {
         rightPressed = true;
+        evt.view.event.preventDefault();
     }
     if(evt.key == "Left" || evt.key == "ArrowLeft") {
         leftPressed = true;
+        evt.view.event.preventDefault();
     }
     if(evt.key == "Up" || evt.key == "ArrowUp") {
         upPressed = true;
+        evt.view.event.preventDefault();
     }
     if(evt.key == "Down" || evt.key == "ArrowDown") {
         downPressed = true;
+        evt.view.event.preventDefault();
     }
     if(evt.key == "w") {
         wPressed = true;
@@ -359,10 +369,12 @@ function scoreGoal(team) {
 
 //function to detect collision between puck and paddles
 function collisionDetection() {
+    //collision detection between puck and home player's paddle
     if(Math.sqrt(Math.pow((xPuck - players.home.x1),2) + Math.pow((yPuck - players.home.y1),2)) < paddleRadius + rPuck) {
         dxPuck = -dxPuck;
         dyPuck = dyPuck;
     }
+    //collision detection between puck and away player's paddle
     if(Math.sqrt(Math.pow((xPuck - players.away.x1),2) + Math.pow((yPuck - players.away.y1),2)) < paddleRadius + rPuck) {
         dxPuck = -dxPuck;
         dyPuck = dyPuck;
