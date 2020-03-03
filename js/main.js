@@ -18,6 +18,12 @@ const $reset_btn = $('.reset-btn');
 //how to play button
 const $howTo_btn = $('.how-to-play-btn');
 
+//audio
+const $audioSiren = $('.siren');
+const $audioShot = $('.shot');
+const $audioCheer = $('.cheer');
+const $audioBoo = $('.boo');
+
 /*------ constanats ------*/
 //puck realted constants
 //radius of puck
@@ -359,12 +365,21 @@ function scoreGoal(team) {
     $msgp.text(`${team.name} SCORES!!!`);
     team.score += 1;
     numPucks -= 1;
+    if(team.score < 4) {
+        $audioSiren[0].play();
+    }
     //win logic
     if(team.score == 4) {
         cancelAnimationFrame(stopAnimate);
         $msgp.text(`${team.name} WINS!`);
         $start_btn.prop('disabled', true);
         $reset_btn.prop('disabled', false);
+        if(team == players.home) {
+            $audioCheer[0].play();
+        }
+        else {
+            $audioBoo[0].play();
+        }
     }
 }
 
@@ -374,11 +389,13 @@ function collisionDetection() {
     if(Math.sqrt(Math.pow((xPuck - players.home.x1),2) + Math.pow((yPuck - players.home.y1),2)) < paddleRadius + rPuck) {
         dxPuck = -dxPuck;
         dyPuck = dyPuck;
+        $audioShot[0].play();
     }
     //collision detection between puck and away player's paddle
     if(Math.sqrt(Math.pow((xPuck - players.away.x1),2) + Math.pow((yPuck - players.away.y1),2)) < paddleRadius + rPuck) {
         dxPuck = -dxPuck;
         dyPuck = dyPuck;
+        $audioShot[0].play();
     }   
 }
 
