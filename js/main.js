@@ -23,6 +23,7 @@ const $audioSiren = $('.siren');
 const $audioShot = $('.shot');
 const $audioCheer = $('.cheer');
 const $audioBoo = $('.boo');
+const $audioStart = $('.start-up');
 
 /*------ constanats ------*/
 //puck realted constants
@@ -411,6 +412,10 @@ function restartPosition() {
 
 //function for starting the game
 function startGame() {
+    //pause all audio and remove messages
+    $audioStart[0].pause();
+    $audioSiren[0].pause();
+    $audioSiren[0].currentTime = 0;
     $msgp.text('');
     $msgp2.text('');
     render();
@@ -464,6 +469,7 @@ function startGame() {
 }
 
 //render the game elements before start
+document.onload = $audioStart[0].play();
 $pHowTo.toggle();
 render();
 $reset_btn.prop('disabled', true);
