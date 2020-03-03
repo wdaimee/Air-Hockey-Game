@@ -7,6 +7,7 @@ const $msgp2 = $('.msg-p2');
 const $homeScoreImg = $('.home-score-img');
 const $awayScoreImg = $('.away-score-img');
 const $numPucks = $('.num-pucks > p');
+const $pHowTo = $('.pHowTo');
 
 //start button
 const $start_btn = $('.start-btn');
@@ -124,7 +125,7 @@ const players = {
 $start_btn.click(startGame);
 $reset_btn.click(reloadGame);
 $howTo_btn.click(function() {
-    $('.pHowTo').toggle();
+    $pHowTo.toggle();
 });
 document.addEventListener('keydown', keyDown);
 document.addEventListener('keyup', keyUp);
@@ -381,6 +382,16 @@ function collisionDetection() {
     }   
 }
 
+//function to reinitialize starting coordinates of paddle and puck
+function restartPosition() {
+    xPuck = canvasW/2; 
+    yPuck = canvasH/2;
+    players.home.x1 = xHome;
+    players.home.y1 = yHome;
+    players.away.x1 = xAway;
+    players.away.y1 = yHome;
+}
+
 //function for starting the game
 function startGame() {
     $msgp.text('');
@@ -417,8 +428,7 @@ function startGame() {
     //if a goal has been scored, cancel animation and return puck to center ice
     else if(goalScored) {
         cancelAnimationFrame(stopAnimate);
-        xPuck = canvasW/2; 
-        yPuck = canvasH/2;
+        restartPosition();
         goalScored = false;
         if(players.home.score <= 3 && players.away.score <= 3) {
             $msgp2.text('Press Start for the Next Puck');
@@ -437,6 +447,7 @@ function startGame() {
 }
 
 //render the game elements before start
+$pHowTo.toggle();
 render();
 $reset_btn.prop('disabled', true);
 
