@@ -1,6 +1,16 @@
 body {
     text-align: center;
+    font-family: 'Press Start 2P', cursive;
+    background-color: #A4E4FC;
 }
+
+h1 {
+    font-size: 20px;
+    color: #0000FC;
+    margin: 30px;
+    padding: 10px;
+}
+
 
 canvas {
     border: 5px solid black;
@@ -10,19 +20,41 @@ canvas {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-
 }
 
 .home-board {
     display: flex;
     flex-direction: column;
-    
-   
+    justify-content: center;
 }
 
 .away-board {
     display: flex;
     flex-direction: column;
-   
-    
+    justify-content: center;
 }
+
+.how-to-play {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.how-to-play-btn {
+    width: 100px;
+}
+
+.play-btn {
+    margin: 10px;
+}
+
+.msg {
+    height: 50px;
+    margin: 20px;
+}
+
+.msg > p {
+    color: red
+}
+
