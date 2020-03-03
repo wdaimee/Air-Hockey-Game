@@ -9,11 +9,14 @@ const $awayScoreImg = $('.away-score-img');
 const $numPucks = $('.num-pucks > p');
 
 //start button
-const start_btn = document.querySelector('.start-btn');
+const $start_btn = $('.start-btn');
+
+//reset button
+const $reset_btn = $('.reset-btn');
 
 /*------ constanats ------*/
 //puck realted constants
-    //radius of puck
+//radius of puck
 const rPuck = 20;
 
 //canvas related constants
@@ -115,7 +118,8 @@ const players = {
 
 /*------ event handlers ------*/
 
-start_btn.addEventListener('click', startGame);
+$start_btn.click(startGame);
+$reset_btn.click(reloadGame);
 document.addEventListener('keydown', keyDown);
 document.addEventListener('keyup', keyUp);
 
@@ -168,39 +172,42 @@ function drawPaddles() {
 
 //function to render the home score
 function renderHomeScore() {
-    if(players.home.score == 0) {
-        $homeScoreImg.attr("src", "images/Home/0.png");
-    }
-    else if(players.home.score == 1) {
-        $homeScoreImg.attr("src", "images/Home/1.png");
-    }
-    else if(players.home.score == 2) {
-        $homeScoreImg.attr("src", "images/Home/2.png");
-    }
-    else if(players.home.score == 3) {
-        $homeScoreImg.attr("src", "images/Home/3.png");
-    }
-    else if(players.home.score == 4) {
-        $homeScoreImg.attr("src", "images/Home/4.png");
+    switch(players.home.score) {
+        case 0:
+            $homeScoreImg.attr("src", "images/Home/0.png");
+            break;
+        case 1:
+            $homeScoreImg.attr("src", "images/Home/1.png")
+            break;
+        case 2:
+            $homeScoreImg.attr("src", "images/Home/2.png");
+            break;
+        case 3:
+            $homeScoreImg.attr("src", "images/Home/3.png");
+            break;
+        case 4:
+            $homeScoreImg.attr("src", "images/Home/4.png")
     }
 }
 
 //function to render the away score
 function renderAwayScore() {
-    if(players.away.score == 0) {
-        $awayScoreImg.attr("src", "images/Away/0.png");
-    }
-    else if(players.away.score == 1) {
-        $awayScoreImg.attr("src", "images/Away/1.png");
-    }
-    else if(players.away.score == 2) {
-        $awayScoreImg.attr("src", "images/Away/2.png");
-    }
-    else if(players.away.score == 3) {
-        $awayScoreImg.attr("src", "images/Away/3.png");
-    }
-    else if(players.away.score == 4) {
-        $awayScoreImg.attr("src", "images/Away/4.png");
+    switch(players.away.score) {
+        case 0:
+            $awayScoreImg.attr("src", "images/Away/0.png");
+            break;
+        case 1:
+            $awayScoreImg.attr("src", "images/Away/1.png");
+            break;
+        case 2: 
+            $awayScoreImg.attr("src", "images/Away/2.png");
+            break;
+        case 3:
+            $awayScoreImg.attr("src", "images/Away/3.png");
+            break;
+        case 4:
+            $awayScoreImg.attr("src", "images/Away/4.png");
+            break;
     }
 }
 
@@ -217,6 +224,11 @@ function render() {
     renderHomeScore();
     renderAwayScore();
     renderNumPucks();
+}
+
+//function to restart the game
+function reloadGame() {
+    document.location.reload();
 }
 
 //function for key down pressed
@@ -336,7 +348,13 @@ function scoreGoal(team) {
     $msgp.text(`${team.name} SCORES!!!`);
     team.score += 1;
     numPucks -= 1;
-    return;
+    //win logic
+    if(team.score == 4) {
+        cancelAnimationFrame(stopAnimate);
+        $msgp.text(`${team.name} WINS!`);
+        $start_btn.prop('disabled', true);
+        $reset_btn.prop('disabled', false);
+    }
 }
 
 //function to detect collision between puck and paddles
@@ -359,41 +377,54 @@ function startGame() {
     controls();
     collisionDetection();
     
+    //collision detection between puck and horizontal surfaces
     if(yPuck + dyPuck > canvasH - rPuck || yPuck + dyPuck < rPuck) {
         dyPuck = -dyPuck;
     }
+    //collision detection between puck and vertical surfaces
     if((xPuck + rPuck > canvasW && (yPuck - rPuck < canvasH/4 || yPuck + rPuck > canvasH*(3/4))) || (xPuck < rPuck && (yPuck - rPuck < canvasH/4 || yPuck + rPuck > canvasH*(3/4)))) {
         dxPuck = -dxPuck;
     }
+    //no collision detection in goal area on away side, if puck crosses area, run scoreGoal function for home team
     if(xPuck > canvasW && (yPuck - rPuck > canvasH/4 || yPuck + rPuck < canvasH*(3/4))) {
         scoreGoal(players.home);
     }
+    //no collision detection in goal area on home side, if puck crosses area, run scoreGoal function for away team
     else if(xPuck < 0 && (yPuck - rPuck > canvasH/4 || yPuck + rPuck < canvasH*(3/4))) {
         scoreGoal(players.away);
     }
 
+    //increment position of puck
     xPuck += dxPuck;
     yPuck += dyPuck;
 
+    //if no goal has been scored, request new frame
     if(!goalScored) {
         stopAnimate = requestAnimationFrame(startGame);
     }
-    else {
+    //if a goal has been scored, cancel animation and return puck to center ice
+    else if(goalScored) {
         cancelAnimationFrame(stopAnimate);
         xPuck = canvasW/2; 
         yPuck = canvasH/2;
         goalScored = false;
-        $msgp2.text("Press Start for the Next Puck");
+        if(players.home.score <= 3 && players.away.score <= 3) {
+            $msgp2.text('Press Start for the Next Puck');
+        }
+        else {
+            $msgp2.text('');
+        }
         //If one puck left, make the puck faster
         if(numPucks === 1){
             dxPuck = 10;
             dyPuck = 10;
         }
-        render();
+        render();        
     }
 
 }
 
 //render the game elements before start
 render();
+$reset_btn.prop('disabled', true);
 
