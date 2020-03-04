@@ -3,6 +3,10 @@
 ### Section for Screen Shots of the Game
 
 ### List of Technologies Used For the Game
+- HTML5
+- JavaScript
+- CSS
+- jQuery
 
 ### Getting Started
 
