@@ -7,6 +7,7 @@ const $msgp2 = $('.msg-p2');
 const $homeScoreImg = $('.home-score-img');
 const $awayScoreImg = $('.away-score-img');
 const $numPucks = $('.num-pucks > p');
+const $howTo = $('.how-to-play');
 const $pHowTo = $('.pHowTo');
 
 //start button
@@ -133,6 +134,7 @@ const players = {
 $start_btn.click(startGame);
 $reset_btn.click(reloadGame);
 $howTo_btn.click(function() {
+    $howTo.toggleClass('black');
     $pHowTo.toggle();
 });
 document.addEventListener('keydown', keyDown);
@@ -202,6 +204,7 @@ function renderHomeScore() {
             break;
         case 4:
             $homeScoreImg.attr("src", "images/Home/4.png")
+            break;
     }
 }
 

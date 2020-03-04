@@ -6,7 +6,7 @@ body {
 }
 
 .wrapper {
-    margin: 30px;
+    margin: 20px;
     background-color: #A4E4FC; 
     border-radius: 50px;
 }
@@ -44,11 +44,19 @@ canvas {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    margin-bottom: 10px;
+    margin: 0 auto 20px;
     height: 140px;
+    width: 700px;
     font-size: 12px;
     font-style: bold;
+    background-color: #A4E4FC;
+    color: #ffa500;
 }
+
+.how-to-play.black {
+    background-color: black;
+}
+
 
 .how-to-play-btn {
     width: 150px;
