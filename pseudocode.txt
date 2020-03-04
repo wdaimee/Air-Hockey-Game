@@ -6,11 +6,11 @@ When Page Loads:
 	- possible render state or save state x
 - Print start button x
 - Print message "Press Start to Play" x
-- Print button for How To Play
-	- Toggle hide/show
-		- Default hide
-		- If button pressed, toggle how to
-			- display How to Message with information on controls
+- Print button for How To Play x
+	- Toggle hide/show x
+		- Default hide x
+		- If button pressed, toggle how to x
+			- display How to Message with information on controls x
 
 
 When player pressed play:
@@ -27,23 +27,23 @@ When player scores as a goal:
 - player score to increment by 1 in object/array x
 - message to display goal scored by player x 
 - render and start game again but with 1 less puck x
-- if player scores 4 goals
-	- display "PLAYER IS THE WINNER"
+- if player scores 4 goals x
+	- display "PLAYER IS THE WINNER" x
 
 Winner Logic:
-- After every goal, check what the player score is in array/object
-- if player score = 4
-	- END game, do not render and display winner message
+- After every goal, check what the player score is in array/object x
+- if player score = 4 x
+	- END game, do not render and display winner message x
 
 
 
 Render Logic:
-- Render the save state of the canvas (with paddles and puck at neutral position)
+- Render the save state of the canvas (with paddles and puck at neutral position) x 
 
 - Render the display message:
-	- Render the message to state which player has scored after a goal
-	- Render the score of each player
-	- If player scores 4 goals:
-		- render the message "PLAYER IS THE WINNER"
-		- do not render the canvas or allow movement of paddles
+	- Render the message to state which player has scored after a goal x
+	- Render the score of each player x
+	- If player scores 4 goals: x
+		- render the message "PLAYER IS THE WINNER" x
+		- do not render the canvas or allow movement of paddles x
 
