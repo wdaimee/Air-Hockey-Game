@@ -370,12 +370,18 @@ function controls() {
 
 //function when a goal is scored, set goalScored variable to true and increment team score by 1 and deincrement num pucks
 function scoreGoal(team) {
+    //turn the goal score flag to true
     goalScored = true;
+    //re-enable the start button for the next puck
+    $start_btn.prop('disabled', false);
+    //display score message and animate pulse
     $msgp.text(`${team.name} SCORES!!!`);
     $msgp.removeClass('animated flash');
     $msgp.addClass('animated pulse');
+    //increment the player score and deincrement the number of pucks
     team.score += 1;
     numPucks -= 1;
+    //if a team has scored and the team score is less than 4 turn on the siren sound
     if(team.score < 4) {
         $audioSiren[0].play();
     }
@@ -423,10 +429,17 @@ function restartPosition() {
 //function for starting the game
 function startGame() {
     //pause all audio and remove messages
+    $start_btn.prop('disabled', true);
     $audioStart[0].pause();
     $audioSiren[0].pause();
     $audioSiren[0].currentTime = 0;
-    $msgp.text('');
+    //if num pucks is equal to one, display 'sudden death!' message, else clear the text
+    if(numPucks == 1) {
+        $msgp.text('sudden death!');
+    }
+    else {
+        $msgp.text('');
+    }
     $msgp2.text('');
     render();
     controls();
