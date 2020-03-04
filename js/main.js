@@ -24,6 +24,7 @@ const $audioShot = $('.shot');
 const $audioCheer = $('.cheer');
 const $audioBoo = $('.boo');
 const $audioStart = $('.start-up');
+const $audioBounce = $('.bounce');
 
 /*------ constanats ------*/
 //puck realted constants
@@ -425,10 +426,12 @@ function startGame() {
     //collision detection between puck and horizontal surfaces
     if(yPuck + dyPuck > canvasH - rPuck || yPuck + dyPuck < rPuck) {
         dyPuck = -dyPuck;
+        $audioBounce[0].play();
     }
     //collision detection between puck and vertical surfaces
     if((xPuck + rPuck > canvasW && (yPuck - rPuck < canvasH/4 || yPuck + rPuck > canvasH*(3/4))) || (xPuck < rPuck && (yPuck - rPuck < canvasH/4 || yPuck + rPuck > canvasH*(3/4)))) {
         dxPuck = -dxPuck;
+        $audioBounce[0].play();
     }
     //no collision detection in goal area on away side, if puck crosses area, run scoreGoal function for home team
     if(xPuck > canvasW && (yPuck - rPuck > canvasH/4 || yPuck + rPuck < canvasH*(3/4))) {
