@@ -478,7 +478,7 @@ function startGame() {
 }
 
 //render the game elements before start
-document.onload = $audioStart[0].play();
+$audioStart[0].play();
 $pHowTo.toggle();
 render();
 $reset_btn.prop('disabled', true);

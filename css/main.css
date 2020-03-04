@@ -46,6 +46,8 @@ canvas {
     align-items: center;
     margin-bottom: 10px;
     height: 140px;
+    font-size: 12px;
+    font-style: bold;
 }
 
 .how-to-play-btn {
@@ -72,10 +74,18 @@ button {
     background-color: white;
     font-family: 'Press Start 2P', cursive;
     padding: 5px;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 5px black;
 }
 
 button:hover {
     border: 2px solid #0000fc;
+}
+
+button:active {
+    box-shadow: 0 5px; #666;
+    transform: translateY(4px);
 }
 
 .num-pucks > p {
