@@ -2,6 +2,7 @@ body {
     text-align: center;
     font-family: 'Press Start 2P', cursive;
     background-color: black;
+    text-transform: uppercase;
 }
 
 .wrapper {
@@ -11,13 +12,13 @@ body {
 }
 
 h1 {
-    font-size: 20px;
+    font-size: 40px;
     color: #0000FC;
     margin: 30px;
     padding: 10px;
-    text-transform: uppercase;
+    font-style: italic;
+    -webkit-animation-delay: 0.5s;
 }
-
 
 canvas {
     border: 5px solid black;
@@ -31,7 +32,9 @@ canvas {
 
 .home-board, .away-board {
     margin-top: 100px;
-    color: black;
+    color: #ffa500;
+    background: black;
+    height: 100px;
 }
 
 .how-to-play {
@@ -56,10 +59,11 @@ canvas {
     height: 50px;
     margin: 20px;
     font-size: 20px;
+    color: red;
 }
 
-.msg > p {
-    color: red
+.msg-p {
+    -webkit-animation-iteration-count: infinite;
 }
 
 button {
@@ -70,4 +74,12 @@ button {
 
 button:hover {
     border: 2px solid #0000fc;
+}
+
+.num-pucks {
+    background-color: black;
+    color: #ffa500;
+    width: 250px;
+    padding: 5px;
+    margin: 0 auto;
 }

@@ -365,6 +365,8 @@ function controls() {
 function scoreGoal(team) {
     goalScored = true;
     $msgp.text(`${team.name} SCORES!!!`);
+    $msgp.removeClass('animated flash');
+    $msgp.addClass('animated pulse');
     team.score += 1;
     numPucks -= 1;
     if(team.score < 4) {
@@ -401,7 +403,7 @@ function collisionDetection() {
     }   
 }
 
-//function to reinitialize starting coordinates of paddle and puck
+//function to reinitialize starting coordinates of paddle and puck after a goal has been scored
 function restartPosition() {
     xPuck = canvasW/2; 
     yPuck = canvasH/2;
