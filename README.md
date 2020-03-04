@@ -1,6 +1,6 @@
 # OLD SCHOOL COOL AIR HOCKEY
 
--><img src="images/screen-shot.png" width="350px" height="250px"><-
+<img src="images/screen-shot.png" width="350px" height="250px">
 
 ### About
 
