@@ -1,7 +1,7 @@
 # OLD SCHOOL COOL AIR HOCKEY
 
-### Section for Screen Shots of the Game
-<img src="images/screen-shot.png" width="250px" height="250px">
+<img src="images/screen-shot.png" width="250px" height="350px">
+
 ### About
 
 Old school cool air hockey is a 2 player air hockey game. The object of the game is to score the puck into the opposite players goal. Each player is awareded 1 point per goal and the game is a series of best of 7. The win, the player must score 4 goals before their opponent. 
