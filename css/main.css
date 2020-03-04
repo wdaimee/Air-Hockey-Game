@@ -6,7 +6,7 @@ body {
 }
 
 .wrapper {
-    margin: 20px;
+    margin: 10px;
     background-color: #A4E4FC; 
     border-radius: 50px;
 }
@@ -14,7 +14,6 @@ body {
 h1 {
     font-size: 40px;
     color: #0000FC;
-    margin: 30px;
     padding: 10px;
     font-style: italic;
     -webkit-animation-delay: 0.5s;

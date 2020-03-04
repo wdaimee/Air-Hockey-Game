@@ -397,13 +397,13 @@ function scoreGoal(team) {
 //function to detect collision between puck and paddles
 function collisionDetection() {
     //collision detection between puck and home player's paddle
-    if(Math.sqrt(Math.pow((xPuck - players.home.x1),2) + Math.pow((yPuck - players.home.y1),2)) < paddleRadius + rPuck) {
+    if(Math.sqrt(Math.pow(((xPuck + dxPuck) - (players.home.x1 + dxPaddle)),2) + Math.pow(((yPuck + dyPuck) - (players.home.y1 + dyPaddle)),2)) < paddleRadius + rPuck) {
         dxPuck = -dxPuck;
         dyPuck = dyPuck;
         $audioShot[0].play();
     }
     //collision detection between puck and away player's paddle
-    if(Math.sqrt(Math.pow((xPuck - players.away.x1),2) + Math.pow((yPuck - players.away.y1),2)) < paddleRadius + rPuck) {
+    if(Math.sqrt(Math.pow(((xPuck + dxPuck) - (players.away.x1 + dyPaddle)),2) + Math.pow(((yPuck + dyPuck) - (players.away.y1 + dyPaddle)),2)) < paddleRadius + rPuck) {
         dxPuck = -dxPuck;
         dyPuck = dyPuck;
         $audioShot[0].play();
