@@ -19,6 +19,7 @@ To control the Away Team, the Up, Down, Left, and Right arrow keys are used to c
 - JavaScript
 - CSS
 - jQuery
+- Animate.css
 
 ### Getting Started
 
