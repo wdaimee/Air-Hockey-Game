@@ -229,6 +229,10 @@ function renderAwayScore() {
 //function to render the number of pucks
 function renderNumPucks() {
     $numPucks.text(`${numPucks} Pucks Left`);
+    if(numPucks == 1) {
+        $numPucks.text(`1 Puck Left`)
+        $numPucks.addClass('animated pulse');
+    }
 }
 
 //global render function to render all render functions
