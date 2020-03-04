@@ -34,7 +34,9 @@ canvas {
     margin-top: 100px;
     color: #ffa500;
     background: black;
-    height: 100px;
+    height: 200px;
+    font-size: 20px;
+    width: 100px;
 }
 
 .how-to-play {
