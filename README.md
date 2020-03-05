@@ -15,7 +15,7 @@ Old school cool air hockey is a 2 player air hockey game. The object of the game
 
 ### Getting Started
 
-[Link to Old School Cool Air Hockey]()
+[Old School Cool Air Hockey](https://wdaimee.github.io/Air-Hockey-Game/)
 
 Controls:
 
