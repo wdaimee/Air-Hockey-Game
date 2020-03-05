@@ -1,6 +1,6 @@
 # OLD SCHOOL COOL AIR HOCKEY
 
-<img src="images/screen-shot.png" width="350px" height="250px">
+<img src="images/screen shot.png" width="350px" height="250px">
 
 ### About
 
@@ -31,4 +31,4 @@ Planned future enhancements:
 - Have users input a name or select between a list of teams
 - Update the design of the background to be more representative of a scoreboard
 - Update the score display of the home and away team to be animated like a timer on a scoreboard
-    
+- Get autoplay of theme music working
