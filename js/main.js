@@ -387,7 +387,6 @@ function scoreGoal(team) {
     }
     //win logic
     if(team.score == 4) {
-        cancelAnimationFrame(stopAnimate);
         $msgp.text(`${team.name} WINS!`);
         $start_btn.prop('disabled', true);
         $reset_btn.prop('disabled', false);
