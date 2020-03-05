@@ -28,7 +28,7 @@ To control the Away Team, the Up, Down, Left, and Right arrow keys are used to c
 ### Next Steps 
 
 Planned future enhancements:
-    - Have users input a name or select between a list of teams
-    - Update the design of the background to be more representative of a scoreboard
-    - Update the score display of the home and away team to be animated like a timer on a scoreboard
+- Have users input a name or select between a list of teams
+- Update the design of the background to be more representative of a scoreboard
+- Update the score display of the home and away team to be animated like a timer on a scoreboard
     
