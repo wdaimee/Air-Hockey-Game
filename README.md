@@ -32,3 +32,4 @@ Planned future enhancements:
 - Update the design of the background to be more representative of a scoreboard
 - Update the score display of the home and away team to be animated like a timer on a scoreboard
 - Get autoplay of theme music working
+- Make the game responsive and work with touch controls on mobile devices
